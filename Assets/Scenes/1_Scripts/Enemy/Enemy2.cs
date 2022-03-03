@@ -53,43 +53,29 @@ public class Enemy2 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        //if (col.collider.GetType() == typeof(BoxCollider2D))
-        //{
-            
-        //}
         if (col.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("bullet hit");
             isDamaged = true;
             Destroy(col.gameObject);
         }
-
-
     }
 
-    //private void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if (col.GetComponent<Collider>().GetType() == typeof(CircleCollider2D))
-    //    {
-    //        Debug.Log("circle collide");
-    //        if (col.gameObject.CompareTag("Player"))
-    //        {
-    //            Debug.Log("found player");
-    //            foundPlayer = true;
-    //        }
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("found player");
+            foundPlayer = true;
+        }
+    }
 
-    //private void OnTriggerExit2D(Collider2D col)
-    //{
-    //    if (col.GetComponent<Collider>().GetType() == typeof(CircleCollider2D))
-    //    {
-    //        Debug.Log("circle collide");
-    //        if (col.gameObject.CompareTag("Player"))
-    //        {
-    //            Debug.Log("found player");
-    //            foundPlayer = false;
-    //        }
-    //    }
-    //}
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("found player");
+            foundPlayer = false;
+        }
+    }
 }
