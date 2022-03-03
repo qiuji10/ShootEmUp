@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour
         sp = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         velocity = direction * speed;

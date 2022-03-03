@@ -23,6 +23,7 @@ public class Enemy1 : MonoBehaviour
     {
         pos -= transform.right * Time.deltaTime * speed;
         transform.position = pos + transform.up * Mathf.Sin(Time.time * frequency) * magnitude;
+
         if (!sp.isVisible)
             Destroy(gameObject);
 
