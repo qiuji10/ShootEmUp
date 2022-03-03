@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 2;
+    public float speed;
+
+    SpriteRenderer sp;
 
     public Vector2 direction = new Vector2(1, 0);
-    public Vector2 velocity;
-
-    void Start()
+    private Vector2 velocity;
+    
+    private void Awake()
     {
-        Destroy(gameObject, 3);
+        sp = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         velocity = direction * speed;
+        if (!sp.isVisible)
+            Destroy(gameObject);
     }
 
     private void FixedUpdate()

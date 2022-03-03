@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
 
     Animator animator;
     Rigidbody2D rb;
-    Gun[] guns;
     Gun gun;
     
     Vector2 movement;
@@ -18,7 +17,6 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        guns = transform.GetComponentsInChildren<Gun>();
         gun = transform.GetComponentInChildren<Gun>();
     }
 
@@ -31,14 +29,7 @@ public class PlayerController : MonoBehaviour
 
         if (isShoot && canShoot)
         {
-            
-            
             ShootCD();
-            //foreach (Gun gun in guns)
-            //{
-            //    gun.Shoot();
-            //    ShootCD();
-            //}
         }
 
         if (movement.y == 0)
