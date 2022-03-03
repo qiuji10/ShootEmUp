@@ -5,10 +5,12 @@ using UnityEngine;
 public class Enemy2 : MonoBehaviour
 {
     [SerializeField]
-    private float speed;
+    private float speed, fireRate, nextFire;
     private int health = 3;
     private bool isDamaged, foundPlayer;
 
+    public Transform target, childTransform;
+    public GameObject enemyBullet;
     SpriteRenderer sp;
 
     Vector3 pos;
@@ -17,6 +19,9 @@ public class Enemy2 : MonoBehaviour
     {
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
+        childTransform = transform.Find("BlueGun");
+        fireRate = 1f;
+        nextFire = Time.time;
     }
 
     private void Update()
@@ -42,13 +47,32 @@ public class Enemy2 : MonoBehaviour
 
         if (foundPlayer)
         {
-            //stop movement
             speed = 0;
-            //get player position, adjust gun and bullet to player position
-            //instantiate enemy bullet
+            Vector3 targetDirection = (target.position - childTransform.position).normalized;
+            float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+            childTransform.eulerAngles = new Vector3(0, 0, angle);
+            CheckFire();
         }
         else
+        {
             speed = 1;
+            childTransform.eulerAngles = new Vector3(0, 0, 180);
+        } 
+    }
+
+    void CheckFire()
+    {
+        if (Time.time > nextFire)
+        {
+            Instantiate(enemyBullet, transform.position, Quaternion.identity);
+            nextFire = Time.time + fireRate;
+        }
+    }
+
+    IEnumerator Shoot(Vector3 vec)
+    {
+        
+        yield return new WaitForSeconds(2f);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -67,6 +91,7 @@ public class Enemy2 : MonoBehaviour
         {
             Debug.Log("found player");
             foundPlayer = true;
+            target = col.gameObject.transform;
         }
     }
 
@@ -76,6 +101,7 @@ public class Enemy2 : MonoBehaviour
         {
             Debug.Log("found player");
             foundPlayer = false;
+            target = null;
         }
     }
 }
