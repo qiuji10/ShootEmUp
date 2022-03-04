@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy2 : MonoBehaviour
+public class Enemy3 : MonoBehaviour
 {
     [SerializeField]
     private float speed, fireRate, nextFire;
@@ -19,9 +19,9 @@ public class Enemy2 : MonoBehaviour
     {
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
-        childTransform = transform.Find("BlueGun");
-        st = childTransform.Find("Gun");
-        fireRate = 1f;
+        childTransform = transform.Find("Laser");
+        st = childTransform.Find("ShootingLaser");
+        fireRate = 4f;
         nextFire = Time.time;
     }
 
@@ -56,9 +56,14 @@ public class Enemy2 : MonoBehaviour
         }
         else
         {
-            speed = 1;
-            childTransform.eulerAngles = new Vector3(0, 0, 180);
-        } 
+            if (!(Time.time > nextFire))
+                return;
+            else
+            {
+                speed = 1;
+                childTransform.eulerAngles = new Vector3(0, 0, 180);
+            }
+        }
     }
 
     void CheckFire()
@@ -68,12 +73,6 @@ public class Enemy2 : MonoBehaviour
             Instantiate(enemyBullet, st.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
         }
-    }
-
-    IEnumerator Shoot(Vector3 vec)
-    {
-        
-        yield return new WaitForSeconds(2f);
     }
 
     private void OnCollisionEnter2D(Collision2D col)

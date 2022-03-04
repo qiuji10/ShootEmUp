@@ -17,7 +17,7 @@ public class EnemyBullet : MonoBehaviour
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        target = GameObject.FindObjectOfType<PlayerCore>();
+        target = FindObjectOfType<PlayerCore>();
         rb.velocity = (target.transform.position - transform.position).normalized * speed;
     }
 
