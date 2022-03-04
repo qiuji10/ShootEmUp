@@ -286,16 +286,31 @@ MonoBehaviour:
   waveIntervalTime: 5
   waves:
   - name: Wave 1
-    enemy: {fileID: 6365951954371364806, guid: d82436b0bb7d8e9428cd166a121319fd, type: 3}
-    count: 2
+    enemies:
+      enemy1: {fileID: 8434458071866414775, guid: ca7306dece2b4d34ebf399b0416c9bdb, type: 3}
+      count1: 3
+      enemy2: {fileID: 8068603636688745847, guid: 430d22dec84752a4ab687dec68c2625c, type: 3}
+      count2: 3
+      enemy3: {fileID: 2388046511494306285, guid: d82436b0bb7d8e9428cd166a121319fd, type: 3}
+      count3: 3
     rate: 1
   - name: Wave 2
-    enemy: {fileID: 8434458071866414775, guid: ca7306dece2b4d34ebf399b0416c9bdb, type: 3}
-    count: 3
+    enemies:
+      enemy1: {fileID: 8434458071866414775, guid: ca7306dece2b4d34ebf399b0416c9bdb, type: 3}
+      count1: 2
+      enemy2: {fileID: 8068603636688745847, guid: 430d22dec84752a4ab687dec68c2625c, type: 3}
+      count2: 1
+      enemy3: {fileID: 2388046511494306285, guid: d82436b0bb7d8e9428cd166a121319fd, type: 3}
+      count3: 3
     rate: 1.5
   - name: Wave 3
-    enemy: {fileID: 8434458071866414775, guid: ca7306dece2b4d34ebf399b0416c9bdb, type: 3}
-    count: 5
+    enemies:
+      enemy1: {fileID: 0}
+      count1: 0
+      enemy2: {fileID: 0}
+      count2: 0
+      enemy3: {fileID: 0}
+      count3: 0
     rate: 2
   spawnPoint:
   - {fileID: 91006576}

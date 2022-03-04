@@ -10,7 +10,7 @@ public class Enemy3 : MonoBehaviour
     private bool isDamaged, foundPlayer;
 
     public Transform target, childTransform, st;
-    public GameObject enemyBullet;
+    public GameObject enemyLaser, EL;
     SpriteRenderer sp;
 
     Vector3 pos;
@@ -37,6 +37,7 @@ public class Enemy3 : MonoBehaviour
         {
             if (health <= 0)
             {
+                Destroy(EL);
                 Destroy(gameObject);
             }
             else
@@ -57,7 +58,9 @@ public class Enemy3 : MonoBehaviour
         else
         {
             if (!(Time.time > nextFire))
+            {
                 return;
+            }
             else
             {
                 speed = 1;
@@ -70,7 +73,7 @@ public class Enemy3 : MonoBehaviour
     {
         if (Time.time > nextFire)
         {
-            Instantiate(enemyBullet, st.position, Quaternion.identity);
+            EL = Instantiate(enemyLaser, st.position, Quaternion.identity) as GameObject;
             nextFire = Time.time + fireRate;
         }
     }
@@ -79,7 +82,6 @@ public class Enemy3 : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("bullet hit");
             isDamaged = true;
             Destroy(col.gameObject);
         }
@@ -89,7 +91,6 @@ public class Enemy3 : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("found player");
             foundPlayer = true;
             target = col.gameObject.transform;
         }
@@ -99,7 +100,6 @@ public class Enemy3 : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("found player");
             foundPlayer = false;
             target = null;
         }

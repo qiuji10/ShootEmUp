@@ -7,11 +7,23 @@ public class WaveSpawner : MonoBehaviour
     public enum SpawnState {SPAWNING, WAITING, COUNTING};
 
     [System.Serializable]
+    public class Enemies
+    {
+        public Transform enemy1;
+        public int count1;
+        public Transform enemy2;
+        public int count2;
+        public Transform enemy3;
+        public int count3;
+    }
+
+    [System.Serializable]
     public class Wave
     {
         public string name;
-        public Transform enemy;
-        public int count;
+        //public Transform enemy;
+        public Enemies enemies;
+        //public int count;
         public float rate;
     }
 
@@ -83,10 +95,50 @@ public class WaveSpawner : MonoBehaviour
     IEnumerator SpwanWave(Wave _wave)
     {
         state = SpawnState.SPAWNING;
-        for (int i = 0; i < _wave.count; i++)
+        //for (int i = 0; i < _wave.count; i++)
+        //{
+        //    SpawnEnemy(_wave.enemy);
+        //    yield return new WaitForSeconds(1f / _wave.rate);
+        //}
+        int allcount = _wave.enemies.count1 + _wave.enemies.count2 + _wave.enemies.count3;
+        for (int i = 0; i < allcount; i++)
         {
-            SpawnEnemy(_wave.enemy);
-            yield return new WaitForSeconds(1f / _wave.rate);
+            int r = Random.Range(1, 4);
+            switch (r)
+            {
+                case 1:
+                    if (_wave.enemies.count1 == 0)
+                    {
+                        allcount++;
+                        break;
+                    }                        
+                    SpawnEnemy(_wave.enemies.enemy1);
+                    yield return new WaitForSeconds(1f / _wave.rate);
+                    _wave.enemies.count1--;
+                    continue;
+
+                case 2:
+                    if (_wave.enemies.count2 == 0)
+                    {
+                        allcount++;
+                        break;
+                    }
+                    SpawnEnemy(_wave.enemies.enemy2);
+                    yield return new WaitForSeconds(1f / _wave.rate);
+                    _wave.enemies.count2--;
+                    continue;
+
+                case 3:
+                    if (_wave.enemies.count3 == 0)
+                    {
+                        allcount++;
+                        break;
+                    }
+                    SpawnEnemy(_wave.enemies.enemy3);
+                    yield return new WaitForSeconds(1f / _wave.rate);
+                    _wave.enemies.count3--;
+                    continue;
+            }
         }
         state = SpawnState.WAITING;
 

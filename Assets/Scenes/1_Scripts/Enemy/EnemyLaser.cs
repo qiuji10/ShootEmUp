@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyLaser : MonoBehaviour
 {
-    private bool dealDamage;
+    private bool isInRange;
 
     PlayerCore target;
 
@@ -25,29 +25,31 @@ public class EnemyLaser : MonoBehaviour
     IEnumerator DelayLaserDamage()
     {
         yield return new WaitForSeconds(1f);
-        if (dealDamage)
+        if (isInRange)
         {
             PlayerCore.instance.IsDamaged = true;
-            Debug.Log("start deal damage");
+            isInRange = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("enter trigger laser");
         if (col.gameObject.CompareTag("Player"))
         {
-            dealDamage = true;
-            Charging();
+            isInRange = true;
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        Charging();
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log("exit trigger laser");
         if (col.gameObject.CompareTag("Player"))
         {
-            dealDamage = false;
+            isInRange = false;
         }
     }
 }

@@ -43,10 +43,8 @@ public class Enemy1 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("enter collide");
         if (col.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("bullet hit");
             isDamaged = true;
             Destroy(col.gameObject);
         }

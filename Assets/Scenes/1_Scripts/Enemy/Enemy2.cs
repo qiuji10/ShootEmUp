@@ -80,7 +80,6 @@ public class Enemy2 : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log("bullet hit");
             isDamaged = true;
             Destroy(col.gameObject);
         }
@@ -90,7 +89,6 @@ public class Enemy2 : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("found player");
             foundPlayer = true;
             target = col.gameObject.transform;
         }
@@ -100,7 +98,6 @@ public class Enemy2 : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("found player");
             foundPlayer = false;
             target = null;
         }

@@ -48,7 +48,6 @@ public class PlayerCore : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("Enemy enter player collision");
         if (col.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Player taking damage from enemy");
