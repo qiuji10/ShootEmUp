@@ -125,7 +125,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 9.5
 --- !u!61 &2388046511494306294
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   childTransform: {fileID: 0}
   st: {fileID: 0}
   enemyLaser: {fileID: 2830858097376547334, guid: 41dc1b08cc451ea41a447ab32a427e6e, type: 3}
+  EL: {fileID: 0}
 --- !u!1 &8040550749345612645
 GameObject:
   m_ObjectHideFlags: 0

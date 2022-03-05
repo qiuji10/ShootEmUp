@@ -13,6 +13,12 @@ public class Enemy1 : MonoBehaviour
 
     Vector3 pos;
 
+    public int Health
+    {
+        get => health;
+        set => health = value;
+    }
+
     private void Awake()
     {
         pos = transform.position;

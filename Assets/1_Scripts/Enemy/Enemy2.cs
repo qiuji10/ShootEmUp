@@ -2,26 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy3 : MonoBehaviour
+public class Enemy2 : MonoBehaviour
 {
     [SerializeField]
     private float speed, fireRate, nextFire;
-    private int health = 3;
+    private int health = 5;
     private bool isDamaged, foundPlayer;
 
     public Transform target, childTransform, st;
-    public GameObject enemyLaser, EL;
+    public GameObject enemyBullet;
     SpriteRenderer sp;
 
     Vector3 pos;
+
+    public int Health
+    {
+        get => health;
+        set => health = value;
+    }
 
     private void Awake()
     {
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
-        childTransform = transform.Find("Laser");
-        st = childTransform.Find("ShootingLaser");
-        fireRate = 4f;
+        childTransform = transform.Find("BlueGun");
+        st = childTransform.Find("Gun");
+        fireRate = 1f;
         nextFire = Time.time;
     }
 
@@ -37,7 +43,6 @@ public class Enemy3 : MonoBehaviour
         {
             if (health <= 0)
             {
-                Destroy(EL);
                 Destroy(gameObject);
             }
             else
@@ -57,25 +62,24 @@ public class Enemy3 : MonoBehaviour
         }
         else
         {
-            if (!(Time.time > nextFire))
-            {
-                return;
-            }
-            else
-            {
-                speed = 1;
-                childTransform.eulerAngles = new Vector3(0, 0, 180);
-            }
-        }
+            speed = 1;
+            childTransform.eulerAngles = new Vector3(0, 0, 180);
+        } 
     }
 
     void CheckFire()
     {
         if (Time.time > nextFire)
         {
-            EL = Instantiate(enemyLaser, st.position, Quaternion.identity) as GameObject;
+            Instantiate(enemyBullet, st.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
         }
+    }
+
+    IEnumerator Shoot(Vector3 vec)
+    {
+        
+        yield return new WaitForSeconds(2f);
     }
 
     private void OnCollisionEnter2D(Collision2D col)

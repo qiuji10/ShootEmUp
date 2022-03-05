@@ -49,7 +49,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (!EnemyIsAlive())
             {
-                WaveCompleted();
+                WaveCompleted(waves[nextWave]);
             }
             else
                 return;
@@ -66,18 +66,28 @@ public class WaveSpawner : MonoBehaviour
             waveCounddown -= Time.deltaTime;
     }
 
-    void WaveCompleted()
+    void WaveCompleted(Wave wave)
     {
         state = SpawnState.COUNTING;
         waveCounddown = waveIntervalTime;
 
+        float enemyCount1 = wave.enemies.count1 * 1.4f;
+        wave.enemies.count1 = (int)Mathf.Ceil(enemyCount1);
+        float enemyCount2 = wave.enemies.count2 * 1.4f;
+        wave.enemies.count2 = (int)Mathf.Ceil(enemyCount2);
+        float enemyCount3 = wave.enemies.count3 * 1.4f;
+        wave.enemies.count3 = (int)Mathf.Ceil(enemyCount3);
+        wave.enemies.enemy1.GetComponent<Enemy1>().Health++;
+        wave.enemies.enemy2.GetComponent<Enemy2>().Health++;
+        wave.enemies.enemy3.GetComponent<Enemy3>().Health++;
+
         //looping wave, can modify what you want
-        if (nextWave + 1 > waves.Length - 1)
-        {
-            nextWave = 0;
-        }
-        else
-            nextWave++;
+        //if (nextWave + 1 > waves.Length - 1)
+        //{
+        //    nextWave = 0;
+        //}
+        //else
+        //    nextWave++;
     }
 
     bool EnemyIsAlive()
@@ -100,43 +110,44 @@ public class WaveSpawner : MonoBehaviour
         //    SpawnEnemy(_wave.enemy);
         //    yield return new WaitForSeconds(1f / _wave.rate);
         //}
-        int allcount = _wave.enemies.count1 + _wave.enemies.count2 + _wave.enemies.count3;
+        int one = _wave.enemies.count1, two = _wave.enemies.count2, three = _wave.enemies.count3;
+        int allcount = one + two + three;
         for (int i = 0; i < allcount; i++)
         {
             int r = Random.Range(1, 4);
             switch (r)
             {
                 case 1:
-                    if (_wave.enemies.count1 == 0)
+                    if (one == 0)
                     {
                         allcount++;
                         break;
                     }                        
                     SpawnEnemy(_wave.enemies.enemy1);
                     yield return new WaitForSeconds(1f / _wave.rate);
-                    _wave.enemies.count1--;
+                    one--;
                     continue;
 
                 case 2:
-                    if (_wave.enemies.count2 == 0)
+                    if (two == 0)
                     {
                         allcount++;
                         break;
                     }
                     SpawnEnemy(_wave.enemies.enemy2);
                     yield return new WaitForSeconds(1f / _wave.rate);
-                    _wave.enemies.count2--;
+                    two--;
                     continue;
 
                 case 3:
-                    if (_wave.enemies.count3 == 0)
+                    if (three == 0)
                     {
                         allcount++;
                         break;
                     }
                     SpawnEnemy(_wave.enemies.enemy3);
                     yield return new WaitForSeconds(1f / _wave.rate);
-                    _wave.enemies.count3--;
+                    three--;
                     continue;
             }
         }
