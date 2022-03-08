@@ -8,21 +8,16 @@ public class Gun : MonoBehaviour
 
     Vector2 direction;
 
-    void Start()
-    {
-        direction = (transform.localRotation * Vector2.right).normalized;
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        direction = (transform.localRotation * Vector2.right).normalized;
     }
 
     public void Shoot()
     {
         GameObject go = Instantiate(bullet.gameObject, transform.position, Quaternion.identity);
         Bullet goBullet = go.GetComponent<Bullet>();
+        goBullet.transform.rotation = transform.rotation;
         goBullet.direction = direction;
     }
 }

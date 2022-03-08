@@ -6,12 +6,13 @@ public class Enemy3 : MonoBehaviour
 {
     [SerializeField]
     private float speed, fireRate, nextFire;
-    private int health = 10;
+    public int health = 10;
     private bool isDamaged, foundPlayer;
 
     public Transform target, childTransform, st;
     public GameObject enemyLaser, EL;
     SpriteRenderer sp;
+    ScoringSystem scoringSystem;
 
     Vector3 pos;
 
@@ -21,12 +22,25 @@ public class Enemy3 : MonoBehaviour
         set => health = value;
     }
 
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
+
+    public float FireRate
+    {
+        get => fireRate;
+        set => fireRate = value;
+    }
+
     private void Awake()
     {
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
         childTransform = transform.Find("Laser");
         st = childTransform.Find("ShootingLaser");
+        scoringSystem = GameObject.Find("GameManager").GetComponent<ScoringSystem>();
         fireRate = 4f;
         nextFire = Time.time;
     }
@@ -41,8 +55,10 @@ public class Enemy3 : MonoBehaviour
 
         if (isDamaged)
         {
-            if (health <= 0)
+            if (health <= 1)
             {
+                scoringSystem.score += 800;
+                scoringSystem.scoreText.text = "Score: " + scoringSystem.score.ToString();
                 Destroy(EL);
                 Destroy(gameObject);
             }

@@ -8,8 +8,8 @@ public class PlayerCore : MonoBehaviour
     public static PlayerCore instance;
 
     [SerializeField]
-    private int health = 5;
-    private bool isDamaged;
+    private int health = 10;
+    private bool isDamaged, getGunPU;
 
     public Text healthText;
 
@@ -19,6 +19,12 @@ public class PlayerCore : MonoBehaviour
         set => isDamaged = value;
     }
 
+    public bool GetGunPU
+    {
+        get => getGunPU;
+        set => getGunPU = value;
+    }
+
     private void Awake()
     {
         if (instance != null)
@@ -26,7 +32,7 @@ public class PlayerCore : MonoBehaviour
         else
             instance = this;
 
-        healthText.text = health.ToString();
+        healthText.text = "Health: " + health.ToString();
     }
 
     private void Update()
@@ -42,7 +48,7 @@ public class PlayerCore : MonoBehaviour
                 health--;
                 isDamaged = false;
             }
-            healthText.text = health.ToString();
+            healthText.text = "Health:" + health.ToString();
         }
     }
 

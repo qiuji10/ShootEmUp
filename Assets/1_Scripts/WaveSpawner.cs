@@ -29,10 +29,13 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField]
     private float waveCounddown;
+    [SerializeField]
+    private int waveNum = 1;
     public float waveIntervalTime = 5f;
     private float searchCountdown = 1f;
     private int nextWave = 0;
 
+    public GameObject GunPowerups;
     public Wave[] waves;
     public Transform[] spawnPoint;
 
@@ -49,6 +52,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (!EnemyIsAlive())
             {
+                waveNum++;
                 WaveCompleted(waves[nextWave]);
             }
             else
@@ -71,15 +75,18 @@ public class WaveSpawner : MonoBehaviour
         state = SpawnState.COUNTING;
         waveCounddown = waveIntervalTime;
 
+        wave.name = "Wave " + waveNum.ToString();
         float enemyCount1 = wave.enemies.count1 * 1.4f;
         wave.enemies.count1 = (int)Mathf.Ceil(enemyCount1);
         float enemyCount2 = wave.enemies.count2 * 1.4f;
         wave.enemies.count2 = (int)Mathf.Ceil(enemyCount2);
         float enemyCount3 = wave.enemies.count3 * 1.4f;
         wave.enemies.count3 = (int)Mathf.Ceil(enemyCount3);
-        wave.enemies.enemy1.GetComponent<Enemy1>().Health++;
-        wave.enemies.enemy2.GetComponent<Enemy2>().Health++;
-        wave.enemies.enemy3.GetComponent<Enemy3>().Health++;
+
+        if (waveNum == 2)
+        {
+            Instantiate(GunPowerups, transform.position, Quaternion.identity);
+        }
 
         //looping wave, can modify what you want
         //if (nextWave + 1 > waves.Length - 1)
@@ -122,7 +129,7 @@ public class WaveSpawner : MonoBehaviour
                     {
                         allcount++;
                         break;
-                    }                        
+                    }
                     SpawnEnemy(_wave.enemies.enemy1);
                     yield return new WaitForSeconds(1f / _wave.rate);
                     one--;

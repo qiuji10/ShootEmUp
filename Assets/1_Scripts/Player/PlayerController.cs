@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
     Gun gun;
+    Gun[] guns;
     
     Vector2 movement;
 
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         gun = transform.GetComponentInChildren<Gun>();
+        guns = transform.GetComponentsInChildren<Gun>();
     }
 
     void Update()
@@ -64,7 +66,15 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ShootInterval()
     {
-        gun.Shoot();
+        if (PlayerCore.instance.GetGunPU)
+        {
+            foreach (Gun gun in guns)
+            {
+                gun.Shoot();
+            }
+        }
+        else
+            gun.Shoot();
         canShoot = false;
         yield return new WaitForSeconds(shootCD);
         canShoot = true;

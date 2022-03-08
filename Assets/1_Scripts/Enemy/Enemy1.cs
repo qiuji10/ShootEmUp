@@ -10,6 +10,7 @@ public class Enemy1 : MonoBehaviour
     private bool isDamaged;
 
     SpriteRenderer sp;
+    ScoringSystem scoringSystem;
 
     Vector3 pos;
 
@@ -19,10 +20,17 @@ public class Enemy1 : MonoBehaviour
         set => health = value;
     }
 
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
+
     private void Awake()
     {
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
+        scoringSystem = GameObject.Find("GameManager").GetComponent<ScoringSystem>();
     }
 
     private void Update()
@@ -35,8 +43,10 @@ public class Enemy1 : MonoBehaviour
 
         if (isDamaged)
         {
-            if (health <= 0)
+            if (health <= 1)
             {
+                scoringSystem.score += 100;
+                scoringSystem.scoreText.text = "Score: " + scoringSystem.score.ToString();
                 Destroy(gameObject);
             }
             else

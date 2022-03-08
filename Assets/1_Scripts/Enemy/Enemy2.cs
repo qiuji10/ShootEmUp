@@ -12,6 +12,7 @@ public class Enemy2 : MonoBehaviour
     public Transform target, childTransform, st;
     public GameObject enemyBullet;
     SpriteRenderer sp;
+    ScoringSystem scoringSystem;
 
     Vector3 pos;
 
@@ -21,12 +22,25 @@ public class Enemy2 : MonoBehaviour
         set => health = value;
     }
 
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
+
+    public float FireRate
+    {
+        get => fireRate;
+        set => fireRate = value;
+    }
+
     private void Awake()
     {
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
         childTransform = transform.Find("BlueGun");
         st = childTransform.Find("Gun");
+        scoringSystem = GameObject.Find("GameManager").GetComponent<ScoringSystem>();
         fireRate = 1f;
         nextFire = Time.time;
     }
@@ -41,8 +55,10 @@ public class Enemy2 : MonoBehaviour
 
         if (isDamaged)
         {
-            if (health <= 0)
+            if (health <= 1)
             {
+                scoringSystem.score += 500;
+                scoringSystem.scoreText.text = "Score: " + scoringSystem.score.ToString();
                 Destroy(gameObject);
             }
             else
@@ -74,12 +90,6 @@ public class Enemy2 : MonoBehaviour
             Instantiate(enemyBullet, st.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
         }
-    }
-
-    IEnumerator Shoot(Vector3 vec)
-    {
-        
-        yield return new WaitForSeconds(2f);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
