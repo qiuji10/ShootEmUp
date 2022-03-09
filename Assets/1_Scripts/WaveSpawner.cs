@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -36,6 +37,8 @@ public class WaveSpawner : MonoBehaviour
     private int nextWave = 0;
 
     public GameObject GunPowerups;
+    public Text wavesText;
+    public Animator waveAnimator;
     public Wave[] waves;
     public Transform[] spawnPoint;
 
@@ -44,6 +47,7 @@ public class WaveSpawner : MonoBehaviour
     private void Start()
     {
         waveCounddown = waveIntervalTime;
+        waveAnimator = wavesText.GetComponent<Animator>();
     }
 
     private void Update()
@@ -59,8 +63,16 @@ public class WaveSpawner : MonoBehaviour
                 return;
         }
 
+        if (waveCounddown <= 4)
+        {
+            waves[0].name = "Wave " + waveNum.ToString();
+            wavesText.text = waves[0].name;
+            waveAnimator.SetBool("waitingNextWave", true);
+        }
+
         if (waveCounddown <= 0)
         {
+            waveAnimator.SetBool("waitingNextWave", false);
             if (state != SpawnState.SPAWNING)
             {
                 StartCoroutine(SpwanWave(waves[nextWave]));
@@ -75,15 +87,16 @@ public class WaveSpawner : MonoBehaviour
         state = SpawnState.COUNTING;
         waveCounddown = waveIntervalTime;
 
-        wave.name = "Wave " + waveNum.ToString();
+        
         float enemyCount1 = wave.enemies.count1 * 1.4f;
         wave.enemies.count1 = (int)Mathf.Ceil(enemyCount1);
         float enemyCount2 = wave.enemies.count2 * 1.4f;
         wave.enemies.count2 = (int)Mathf.Ceil(enemyCount2);
         float enemyCount3 = wave.enemies.count3 * 1.4f;
         wave.enemies.count3 = (int)Mathf.Ceil(enemyCount3);
+        wave.rate *= 1.05f;
 
-        if (waveNum == 2)
+        if (waveNum == 10)
         {
             Instantiate(GunPowerups, transform.position, Quaternion.identity);
         }
