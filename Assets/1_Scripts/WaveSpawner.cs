@@ -36,6 +36,12 @@ public class WaveSpawner : MonoBehaviour
     private float searchCountdown = 1f;
     private int nextWave = 0;
 
+    private int h1 = 3, h2 = 5, h3 = 9;
+    private float fr2 = 2f, fr3 = 4f;
+
+    public Enemy1 E1;
+    public Enemy2 E2;
+    public Enemy3 E3;
     public GameObject GunPowerups;
     public Text wavesText;
     public Animator waveAnimator;
@@ -87,16 +93,21 @@ public class WaveSpawner : MonoBehaviour
         state = SpawnState.COUNTING;
         waveCounddown = waveIntervalTime;
 
-        
         float enemyCount1 = wave.enemies.count1 * 1.4f;
         wave.enemies.count1 = (int)Mathf.Ceil(enemyCount1);
         float enemyCount2 = wave.enemies.count2 * 1.4f;
         wave.enemies.count2 = (int)Mathf.Ceil(enemyCount2);
         float enemyCount3 = wave.enemies.count3 * 1.4f;
         wave.enemies.count3 = (int)Mathf.Ceil(enemyCount3);
-        wave.rate *= 1.05f;
+        wave.rate *= 1.005f;
 
-        if (waveNum == 10)
+        h1++;
+        h2++;
+        h3++;
+        fr2 -= 0.05f;
+        fr3 -= 0.01f;
+
+        if (waveNum == 7)
         {
             Instantiate(GunPowerups, transform.position, Quaternion.identity);
         }
@@ -179,6 +190,20 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform _enemy)
     {
         Transform _sp = spawnPoint[Random.Range(0, spawnPoint.Length)];
-        Instantiate(_enemy, _sp.position, _sp.rotation);
+        Transform enemy = Instantiate(_enemy, _sp.position, _sp.rotation);
+        if (enemy.GetComponent("Enemy1") != null)
+        {                           
+            enemy.GetComponent<Enemy1>().Health = h1;
+        }
+        if (enemy.GetComponent("Enemy2") != null)
+        {
+            enemy.GetComponent<Enemy2>().Health = h2;
+            enemy.GetComponent<Enemy2>().FireRate = fr2;
+        }
+        if (enemy.GetComponent("Enemy3") != null)
+        {
+            enemy.GetComponent<Enemy3>().Health = h3;
+            enemy.GetComponent<Enemy3>().FireRate = fr3;
+        }
     }
 }

@@ -41,7 +41,7 @@ public class Enemy2 : MonoBehaviour
         childTransform = transform.Find("BlueGun");
         st = childTransform.Find("Gun");
         scoringSystem = GameObject.Find("GameManager").GetComponent<ScoringSystem>();
-        fireRate = 1f;
+        fireRate = 2f;
         nextFire = Time.time;
     }
 

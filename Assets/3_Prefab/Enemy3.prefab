@@ -167,6 +167,7 @@ MonoBehaviour:
   speed: 1
   fireRate: 0
   nextFire: 0
+  health: 9
   target: {fileID: 0}
   childTransform: {fileID: 0}
   st: {fileID: 0}
