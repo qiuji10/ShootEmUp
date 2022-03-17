@@ -62,6 +62,7 @@ public class Enemy1 : MonoBehaviour
         if (col.gameObject.CompareTag("Bullet"))
         {
             isDamaged = true;
+            PlayerCore.instance.IsDamaged = true;
             Destroy(col.gameObject);
         }
     }

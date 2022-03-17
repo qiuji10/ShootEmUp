@@ -36,13 +36,14 @@ public class WaveSpawner : MonoBehaviour
     private float searchCountdown = 1f;
     private int nextWave = 0;
 
-    private int h1 = 3, h2 = 5, h3 = 9;
-    private float fr2 = 2f, fr3 = 4f;
+    private int h2 = 5, h3 = 9;
+    private float fr2 = 2f, fr3 = 4f, bs2 = 5f, s1 = 3f;
 
     public Enemy1 E1;
     public Enemy2 E2;
     public Enemy3 E3;
     public GameObject GunPowerups;
+    public GameObject[] buffPowerups;
     public Text wavesText;
     public Animator waveAnimator;
     public Wave[] waves;
@@ -93,17 +94,18 @@ public class WaveSpawner : MonoBehaviour
         state = SpawnState.COUNTING;
         waveCounddown = waveIntervalTime;
 
-        float enemyCount1 = wave.enemies.count1 * 1.4f;
+        float enemyCount1 = wave.enemies.count1 * 1.2f;
         wave.enemies.count1 = (int)Mathf.Ceil(enemyCount1);
-        float enemyCount2 = wave.enemies.count2 * 1.4f;
+        float enemyCount2 = wave.enemies.count2 * 1.2f;
         wave.enemies.count2 = (int)Mathf.Ceil(enemyCount2);
-        float enemyCount3 = wave.enemies.count3 * 1.4f;
+        float enemyCount3 = wave.enemies.count3 * 1.2f;
         wave.enemies.count3 = (int)Mathf.Ceil(enemyCount3);
         wave.rate *= 1.005f;
 
-        h1++;
         h2++;
         h3++;
+        s1 += 0.5f;
+        bs2 += 0.5f;
         fr2 -= 0.05f;
         fr3 -= 0.01f;
 
@@ -145,7 +147,7 @@ public class WaveSpawner : MonoBehaviour
         int allcount = one + two + three;
         for (int i = 0; i < allcount; i++)
         {
-            int r = Random.Range(1, 4);
+            int r = Random.Range(1, 5);
             switch (r)
             {
                 case 1:
@@ -180,6 +182,19 @@ public class WaveSpawner : MonoBehaviour
                     yield return new WaitForSeconds(1f / _wave.rate);
                     three--;
                     continue;
+
+                case 4:
+                    int startRand = 0;
+                    startRand = Random.Range(1, 4);
+                    if (startRand == 1)
+                    {
+                        Vector2 randPos = new Vector2(Random.Range(-6, 6), Random.Range(3, -3));
+                        GameObject pwPrefab = buffPowerups[Random.Range(0, buffPowerups.Length)];
+                        Instantiate(pwPrefab, randPos, transform.rotation);
+                        continue;
+                    }
+                    else
+                        break;
             }
         }
         state = SpawnState.WAITING;
@@ -193,12 +208,13 @@ public class WaveSpawner : MonoBehaviour
         Transform enemy = Instantiate(_enemy, _sp.position, _sp.rotation);
         if (enemy.GetComponent("Enemy1") != null)
         {                           
-            enemy.GetComponent<Enemy1>().Health = h1;
+            enemy.GetComponent<Enemy1>().Speed = s1;
         }
         if (enemy.GetComponent("Enemy2") != null)
         {
             enemy.GetComponent<Enemy2>().Health = h2;
             enemy.GetComponent<Enemy2>().FireRate = fr2;
+            enemy.GetComponent<Enemy2>().enemyBullet.GetComponent<EnemyBullet>().speed = bs2;
         }
         if (enemy.GetComponent("Enemy3") != null)
         {

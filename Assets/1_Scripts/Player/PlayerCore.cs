@@ -9,9 +9,11 @@ public class PlayerCore : MonoBehaviour
 
     [SerializeField]
     private int health = 10;
-    private bool isDamaged, getGunPU;
+    [SerializeField]
+    private bool isDamaged, getGunPU, getShieldPU, getSpeedPU;
 
     public Text healthText;
+    public GameObject shield, speedBoost;
 
     public bool IsDamaged
     {
@@ -23,6 +25,18 @@ public class PlayerCore : MonoBehaviour
     {
         get => getGunPU;
         set => getGunPU = value;
+    }
+
+    public bool GetShieldPU
+    {
+        get => getShieldPU;
+        set => getShieldPU = value;
+    }
+
+    public bool GetSpeedPU
+    {
+        get => getSpeedPU;
+        set => getSpeedPU = value;
     }
 
     private void Awake()
@@ -37,24 +51,51 @@ public class PlayerCore : MonoBehaviour
 
     private void Update()
     {
+        if (getShieldPU)
+        {
+            StartCoroutine(ShieldActivation());
+        }
+
+        if (getGunPU)
+        {
+            StartCoroutine(DisableGunPU());
+        }
+
         if (isDamaged)
         {
-            if (health <= 0)
+            if (!shield.activeInHierarchy)
             {
-                //lose game
+                if (health <= 0)
+                {
+                    //lose game
+                }
+                else
+                {
+                    health--;
+                    isDamaged = false;
+                }
+                healthText.text = "Health:" + health.ToString();
             }
-            else
-            {
-                health--;
-                isDamaged = false;
-            }
-            healthText.text = "Health:" + health.ToString();
         }
+    }
+
+    IEnumerator ShieldActivation()
+    {
+        shield.SetActive(true);
+        yield return new WaitForSeconds(5);
+        shield.SetActive(false);
+        getShieldPU = false;
+    }
+
+    IEnumerator DisableGunPU()
+    {
+        yield return new WaitForSeconds(10);
+        getGunPU = false;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.CompareTag("EnemyBullet"))
         {
             Debug.Log("Player taking damage from enemy");
             isDamaged = true;

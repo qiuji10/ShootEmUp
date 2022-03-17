@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (PlayerCore.instance.GetSpeedPU)
+        {
+            StartCoroutine(ActivateSpeedPU());
+        }
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
@@ -61,22 +66,51 @@ public class PlayerController : MonoBehaviour
 
     public void ShootCD()
     {
-        StartCoroutine(ShootInterval());
+        if (!PlayerCore.instance.GetGunPU)
+        {
+            StartCoroutine(ShootInterval());
+        }    
+        else
+        {
+            StartCoroutine(GunPUShootInterval());
+        }
+            
     }
 
     IEnumerator ShootInterval()
     {
-        if (PlayerCore.instance.GetGunPU)
-        {
-            foreach (Gun gun in guns)
-            {
-                gun.Shoot();
-            }
-        }
-        else
-            gun.Shoot();
+        gun.Shoot();
         canShoot = false;
         yield return new WaitForSeconds(shootCD);
         canShoot = true;
+        if (PlayerCore.instance.GetGunPU)
+        {
+            StopCoroutine(ShootInterval());
+        }
+    }
+
+    IEnumerator GunPUShootInterval()
+    {
+        foreach (Gun gun in guns)
+        {
+            gun.Shoot();
+        }
+        canShoot = false;
+        yield return new WaitForSeconds(shootCD);
+        canShoot = true;
+        if (!PlayerCore.instance.GetGunPU)
+        {
+            StopCoroutine(GunPUShootInterval());
+        }
+    }
+
+    IEnumerator ActivateSpeedPU()
+    {
+        speed = 10;
+        PlayerCore.instance.speedBoost.SetActive(true);
+        yield return new WaitForSeconds(5);
+        speed = 5;
+        PlayerCore.instance.GetSpeedPU = false;
+        PlayerCore.instance.speedBoost.SetActive(false);
     }
 }

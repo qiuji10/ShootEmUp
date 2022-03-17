@@ -31,6 +31,12 @@ public class EnemyBullet : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
+            PlayerCore.instance.IsDamaged = true;
+            Destroy(gameObject);
+        }
+
+        if (col.gameObject.CompareTag("Shield"))
+        {
             Destroy(gameObject);
         }
     }
