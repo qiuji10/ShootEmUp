@@ -12,7 +12,7 @@ public class Enemy3 : MonoBehaviour
     public Transform target, childTransform, st;
     public GameObject enemyLaser, EL;
     SpriteRenderer sp;
-    ScoringSystem scoringSystem;
+    UIManager scoringSystem;
 
     Vector3 pos;
 
@@ -40,7 +40,7 @@ public class Enemy3 : MonoBehaviour
         sp = GetComponent<SpriteRenderer>();
         childTransform = transform.Find("Laser");
         st = childTransform.Find("ShootingLaser");
-        scoringSystem = GameObject.Find("GameManager").GetComponent<ScoringSystem>();
+        scoringSystem = GameObject.Find("GameManager").GetComponent<UIManager>();
         fireRate = 4f;
         nextFire = Time.time;
     }

@@ -10,7 +10,7 @@ public class Enemy1 : MonoBehaviour
     private bool isDamaged;
 
     SpriteRenderer sp;
-    ScoringSystem scoringSystem;
+    UIManager scoringSystem;
 
     Vector3 pos;
 
@@ -30,7 +30,7 @@ public class Enemy1 : MonoBehaviour
     {
         pos = transform.position;
         sp = GetComponent<SpriteRenderer>();
-        scoringSystem = GameObject.Find("GameManager").GetComponent<ScoringSystem>();
+        scoringSystem = GameObject.Find("GameManager").GetComponent<UIManager>();
     }
 
     private void Update()

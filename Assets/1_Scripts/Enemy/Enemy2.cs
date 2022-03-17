@@ -12,7 +12,7 @@ public class Enemy2 : MonoBehaviour
     public Transform target, childTransform, st;
     public GameObject enemyBullet;
     SpriteRenderer sp;
-    ScoringSystem scoringSystem;
+    UIManager scoringSystem;
 
     Vector3 pos;
 
@@ -40,7 +40,7 @@ public class Enemy2 : MonoBehaviour
         sp = GetComponent<SpriteRenderer>();
         childTransform = transform.Find("BlueGun");
         st = childTransform.Find("Gun");
-        scoringSystem = GameObject.Find("GameManager").GetComponent<ScoringSystem>();
+        scoringSystem = GameObject.Find("GameManager").GetComponent<UIManager>();
         fireRate = 2f;
         nextFire = Time.time;
     }
