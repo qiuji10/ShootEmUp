@@ -109,11 +109,6 @@ public class WaveSpawner : MonoBehaviour
         fr2 -= 0.05f;
         fr3 -= 0.01f;
 
-        if (waveNum == 7)
-        {
-            Instantiate(GunPowerups, transform.position, Quaternion.identity);
-        }
-
         //looping wave, can modify what you want
         //if (nextWave + 1 > waves.Length - 1)
         //{
