@@ -9,14 +9,18 @@ public class UIManager : MonoBehaviour
     public int score;
     public int highscore;
 
-    public GameObject pauseMenu;
+    public GameObject pauseMenu, gameOver;
     public Text scoreText;
     public Text highscoreText;
+    public Text healthText;
 
+    private PlayerCore playerCore;
     private void Awake()
     {
+        playerCore = FindObjectOfType<PlayerCore>();
         highscore = PlayerPrefs.GetInt("Highscore");
         highscoreText.text = "Highscore: " + highscore.ToString();
+        UpdateHealth();
     }
 
     private void Update()
@@ -60,6 +64,11 @@ public class UIManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         gameObject.GetComponent<GameSceneManager>().SwitchScene(0);
+    }
+
+    public void UpdateHealth()
+    {
+        healthText.text = "Health: " + playerCore.Health.ToString();
     }
 
 }

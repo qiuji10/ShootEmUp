@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerCore : MonoBehaviour
 {
@@ -14,9 +13,14 @@ public class PlayerCore : MonoBehaviour
     [SerializeField]
     private bool isDamaged, isImmune, getGunPU, getShieldPU, getSpeedPU;
 
-    public Text healthText;
     public GameObject shield, speedBoost;
     Animator animator;
+    UIManager uiManager;
+
+    public int Health
+    {
+        get => health;
+    }
 
     public bool IsDamaged
     {
@@ -49,7 +53,8 @@ public class PlayerCore : MonoBehaviour
         else
             instance = this;
 
-        healthText.text = "Health: " + health.ToString();
+        uiManager = GameObject.Find("GameManager").GetComponent<UIManager>();
+        
         animator = GetComponent<Animator>();
         damagedLayerIndex = animator.GetLayerIndex("Damaged");
     }
@@ -82,7 +87,8 @@ public class PlayerCore : MonoBehaviour
                     health--;
                     isImmune = true;
                     immunityTime = 0;
-                    healthText.text = "Health:" + health.ToString();
+                    uiManager.UpdateHealth();
+                    //healthText.text = "Health:" + health.ToString();
                 }
                 else if (isImmune)
                 {
