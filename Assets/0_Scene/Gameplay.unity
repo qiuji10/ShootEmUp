@@ -1010,7 +1010,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02005744, y: -0.06685808}
+  m_Offset: {x: 0.02005744, y: -0.0658122}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1021,7 +1021,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7459388, y: 0.19770199}
+  m_Size: {x: 0.7459388, y: 0.17469242}
   m_EdgeRadius: 0
 --- !u!50 &971062530
 Rigidbody2D:
@@ -1122,8 +1122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c3a559ff7696e42b5e0ba642873e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immunityTime: 0
+  immunityDuration: 5
   health: 10
+  damagedLayerIndex: 0
   isDamaged: 0
+  isImmune: 0
   getGunPU: 0
   getShieldPU: 0
   getSpeedPU: 0

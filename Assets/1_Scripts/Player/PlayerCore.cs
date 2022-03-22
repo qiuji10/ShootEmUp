@@ -7,13 +7,16 @@ public class PlayerCore : MonoBehaviour
 {
     public static PlayerCore instance;
 
+    public float immunityTime,immunityDuration = 5f;
+
     [SerializeField]
-    private int health = 10;
+    private int health = 10, damagedLayerIndex;
     [SerializeField]
-    private bool isDamaged, getGunPU, getShieldPU, getSpeedPU;
+    private bool isDamaged, isImmune, getGunPU, getShieldPU, getSpeedPU;
 
     public Text healthText;
     public GameObject shield, speedBoost;
+    Animator animator;
 
     public bool IsDamaged
     {
@@ -47,6 +50,8 @@ public class PlayerCore : MonoBehaviour
             instance = this;
 
         healthText.text = "Health: " + health.ToString();
+        animator = GetComponent<Animator>();
+        damagedLayerIndex = animator.GetLayerIndex("Damaged");
     }
 
     private void Update()
@@ -65,16 +70,31 @@ public class PlayerCore : MonoBehaviour
         {
             if (!shield.activeInHierarchy)
             {
+                
                 if (health <= 0)
                 {
                     //lose game
                 }
-                else
+                
+                if (health > 0 && !isImmune)
                 {
+                    animator.SetLayerWeight(damagedLayerIndex, 1f);
                     health--;
-                    isDamaged = false;
+                    isImmune = true;
+                    immunityTime = 0;
+                    healthText.text = "Health:" + health.ToString();
                 }
-                healthText.text = "Health:" + health.ToString();
+                else if (isImmune)
+                {
+                    immunityTime = immunityTime + Time.deltaTime;
+                    if (immunityTime >= immunityDuration)
+                    {
+                        animator.SetLayerWeight(damagedLayerIndex, 0f);
+                        isDamaged = false;
+                        isImmune = false;
+                    }
+                }
+                
             }
         }
     }
@@ -95,9 +115,8 @@ public class PlayerCore : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("EnemyBullet"))
+        if (col.gameObject.CompareTag("EnemyBullet") || col.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Player taking damage from enemy");
             isDamaged = true;
         }
     }

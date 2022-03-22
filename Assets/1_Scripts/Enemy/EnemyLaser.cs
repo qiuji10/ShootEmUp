@@ -27,7 +27,7 @@ public class EnemyLaser : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (isInRange)
         {
-            PlayerCore.instance.IsDamaged = true;
+            target.IsDamaged = true;
             isInRange = false;
         }
     }
