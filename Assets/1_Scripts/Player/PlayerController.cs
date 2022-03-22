@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Gun gun;
     Gun[] guns;
-    
+
+    public AudioData ShootAudio;
+
     Vector2 movement;
 
     void Awake()
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     public void ShootCD()
     {
+        AudioManager.instance.PlaySFX(ShootAudio, "Shoot");
         if (!PlayerCore.instance.GetGunPU)
         {
             StartCoroutine(ShootInterval());

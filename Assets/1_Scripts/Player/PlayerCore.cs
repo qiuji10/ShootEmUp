@@ -22,7 +22,6 @@ public class PlayerCore : MonoBehaviour
     private PlayerController playerController;
     public GameObject shield, speedBoost;
     public AudioData PlayerAudio;
-    
 
     public int Health
     {
