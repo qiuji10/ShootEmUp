@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
     {
         velocity = direction * speed;
         if (!sp.isVisible)
-            Destroy(gameObject);
+            gameObject.SetActive(false);
     }
 
     private void FixedUpdate()

@@ -110,7 +110,7 @@ public class Enemy3 : MonoBehaviour
         if (col.gameObject.CompareTag("Bullet"))
         {
             isDamaged = true;
-            Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
         }
     }
 
