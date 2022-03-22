@@ -6,16 +6,22 @@ public class PlayerCore : MonoBehaviour
 {
     public static PlayerCore instance;
 
-    public float immunityTime,immunityDuration = 5f;
+    public float immunityDuration = 3f;
 
     [SerializeField]
-    private int health = 10, damagedLayerIndex;
+    private int health = 10;
+    private int damagedLayerIndex;
+
+    [SerializeField]
+    private float immunityTime, shieldTimer, gunTimer, speedTimer;
     [SerializeField]
     private bool isDamaged, isImmune, getGunPU, getShieldPU, getSpeedPU;
 
+    private Animator animator;
+    private UIManager uiManager;
+    private PlayerController playerController;
     public GameObject shield, speedBoost;
-    Animator animator;
-    UIManager uiManager;
+    
 
     public int Health
     {
@@ -54,31 +60,43 @@ public class PlayerCore : MonoBehaviour
             instance = this;
 
         uiManager = GameObject.Find("GameManager").GetComponent<UIManager>();
-        
         animator = GetComponent<Animator>();
         damagedLayerIndex = animator.GetLayerIndex("Damaged");
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        if (getShieldPU)
+        if (GetShieldPU)
         {
-            StartCoroutine(ShieldActivation());
+            shield.SetActive(true);
+            DisableShieldPU();
         }
 
-        if (getGunPU)
+        if (GetGunPU)
         {
-            StartCoroutine(DisableGunPU());
+            DisableGunPU();
+        }
+
+        if (GetSpeedPU)
+        {
+            speedBoost.SetActive(true);
+            DisableSpeedPU();
         }
 
         if (isDamaged)
         {
+            if (shield.activeInHierarchy)
+            {
+                animator.SetLayerWeight(damagedLayerIndex, 0f);
+            }
+
             if (!shield.activeInHierarchy)
             {
-                
                 if (health <= 0)
                 {
-                    //lose game
+                    gameObject.GetComponent<PlayerController>().enabled = false;
+                    uiManager.GameOver();
                 }
                 
                 if (health > 0 && !isImmune)
@@ -88,7 +106,6 @@ public class PlayerCore : MonoBehaviour
                     isImmune = true;
                     immunityTime = 0;
                     uiManager.UpdateHealth();
-                    //healthText.text = "Health:" + health.ToString();
                 }
                 else if (isImmune)
                 {
@@ -100,23 +117,42 @@ public class PlayerCore : MonoBehaviour
                         isImmune = false;
                     }
                 }
-                
             }
         }
     }
 
-    IEnumerator ShieldActivation()
+    public void DisableShieldPU()
     {
-        shield.SetActive(true);
-        yield return new WaitForSeconds(5);
-        shield.SetActive(false);
-        getShieldPU = false;
+        shieldTimer += Time.deltaTime;
+        if (shieldTimer >= 5)
+        {
+            shieldTimer = 0;
+            shield.SetActive(false);
+            GetShieldPU = false;
+        }
     }
 
-    IEnumerator DisableGunPU()
+    public void DisableGunPU()
     {
-        yield return new WaitForSeconds(10);
-        getGunPU = false;
+        gunTimer += Time.deltaTime;
+        if (gunTimer >= 5)
+        {
+            gunTimer = 0;
+            GetGunPU = false;
+        }
+    }
+
+    public void DisableSpeedPU()
+    {
+        playerController.speed = 10;
+        speedTimer += Time.deltaTime;
+        if (speedTimer >= 5)
+        {
+            speedTimer = 0;
+            playerController.speed = 5;
+            speedBoost.SetActive(false);
+            GetSpeedPU = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)

@@ -24,11 +24,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (PlayerCore.instance.GetSpeedPU)
-        {
-            StartCoroutine(ActivateSpeedPU());
-        }
-
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
@@ -73,8 +68,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             StartCoroutine(GunPUShootInterval());
-        }
-            
+        } 
     }
 
     IEnumerator ShootInterval()
@@ -102,15 +96,5 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(GunPUShootInterval());
         }
-    }
-
-    IEnumerator ActivateSpeedPU()
-    {
-        speed = 10;
-        PlayerCore.instance.speedBoost.SetActive(true);
-        yield return new WaitForSeconds(5);
-        speed = 5;
-        PlayerCore.instance.GetSpeedPU = false;
-        PlayerCore.instance.speedBoost.SetActive(false);
     }
 }

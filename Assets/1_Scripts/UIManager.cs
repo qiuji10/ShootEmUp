@@ -15,8 +15,11 @@ public class UIManager : MonoBehaviour
     public Text healthText;
 
     private PlayerCore playerCore;
+    private GameSceneManager gsm;
+
     private void Awake()
     {
+        gsm = GetComponent<GameSceneManager>();
         playerCore = FindObjectOfType<PlayerCore>();
         highscore = PlayerPrefs.GetInt("Highscore");
         highscoreText.text = "Highscore: " + highscore.ToString();
@@ -63,12 +66,16 @@ public class UIManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = 1f;
-        gameObject.GetComponent<GameSceneManager>().SwitchScene(0);
+        gsm.SwitchScene(0);
+    }
+
+    public void GameOver()
+    {
+        gameOver.SetActive(true);
     }
 
     public void UpdateHealth()
     {
         healthText.text = "Health: " + playerCore.Health.ToString();
     }
-
 }

@@ -9,12 +9,31 @@ public class PowerUps : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             if (gameObject.CompareTag("GunPowerUp"))
-                PlayerCore.instance.GetGunPU = true;
+            {
+                if (!PlayerCore.instance.GetGunPU)
+                {
+                    PlayerCore.instance.GetGunPU = true;
+                    Destroy(gameObject);
+                }
+            }
+                
             if (gameObject.CompareTag("ShieldPowerUp"))
-                PlayerCore.instance.GetShieldPU = true;
+            {
+                if (!PlayerCore.instance.GetShieldPU)
+                {
+                    PlayerCore.instance.GetShieldPU = true;
+                    Destroy(gameObject);
+                }
+            }
+                
             if (gameObject.CompareTag("SpeedPowerUp"))
-                PlayerCore.instance.GetSpeedPU = true;
-            Destroy(gameObject);
+            {
+                if (!PlayerCore.instance.GetSpeedPU)
+                {
+                    PlayerCore.instance.GetSpeedPU = true;
+                    Destroy(gameObject);
+                }  
+            }  
         }
     }
 }
