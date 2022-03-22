@@ -21,6 +21,7 @@ public class PlayerCore : MonoBehaviour
     private UIManager uiManager;
     private PlayerController playerController;
     public GameObject shield, speedBoost;
+    public AudioData PlayerAudio;
     
 
     public int Health
@@ -102,6 +103,7 @@ public class PlayerCore : MonoBehaviour
                 if (health > 0 && !isImmune)
                 {
                     animator.SetLayerWeight(damagedLayerIndex, 1f);
+                    AudioManager.instance.PlaySFX(PlayerAudio, "Damaged");
                     health--;
                     isImmune = true;
                     immunityTime = 0;

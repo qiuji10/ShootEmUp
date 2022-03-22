@@ -1307,6 +1307,7 @@ MonoBehaviour:
   getSpeedPU: 0
   shield: {fileID: 1686287011}
   speedBoost: {fileID: 1714080728}
+  PlayerAudio: {fileID: 11400000, guid: bf71c6711ddddfe4fba42b83992125e2, type: 2}
 --- !u!1 &1059654770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,6 +1523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432894343316907371, guid: 668a0e9fb1d12eb4f89653df05346659, type: 3}
+  ShootAudio: {fileID: 11400000, guid: bf71c6711ddddfe4fba42b83992125e2, type: 2}
 --- !u!1001 &1449457725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1624,6 +1626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432894343316907371, guid: 668a0e9fb1d12eb4f89653df05346659, type: 3}
+  ShootAudio: {fileID: 11400000, guid: bf71c6711ddddfe4fba42b83992125e2, type: 2}
 --- !u!1 &1506160889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,6 +2659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432894343316907371, guid: 668a0e9fb1d12eb4f89653df05346659, type: 3}
+  ShootAudio: {fileID: 11400000, guid: bf71c6711ddddfe4fba42b83992125e2, type: 2}
 --- !u!1001 &1949887124
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class Enemy1 : MonoBehaviour
     private int health = 3;
     private bool isDamaged;
 
+    public GameObject ExplosionPrefab;
+    public AudioData EnemyAudio;
     SpriteRenderer sp;
     UIManager scoringSystem;
 
@@ -47,6 +49,9 @@ public class Enemy1 : MonoBehaviour
             {
                 scoringSystem.score += 100;
                 scoringSystem.scoreText.text = "Score: " + scoringSystem.score.ToString();
+                GameObject ex = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+                Destroy(ex, 1);
+                AudioManager.instance.PlaySFX(EnemyAudio, "EnemyDie");
                 Destroy(gameObject);
             }
             else

@@ -57,19 +57,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayLoopingSFX(AudioData _audioData, string _name)
-    {
-        SoundFile sound = GetSound(_audioData, _name);
-        if (sound != null)
-        {
-            SFX_Source.volume = sound.volume;
-            SFX_Source.clip = sound.clip;
-            SFX_Source.loop = true;
-
-            SFX_Source.Play();
-        }
-    }
-
     public void PlayBGM(AudioData _audioData, string _name, bool loop = true)
     {
         SoundFile sound = GetSound(_audioData, _name);

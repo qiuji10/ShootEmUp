@@ -11,6 +11,8 @@ public class Enemy2 : MonoBehaviour
 
     public Transform target, childTransform, st;
     public GameObject enemyBullet;
+    public GameObject ExplosionPrefab;
+    public AudioData EnemyAudio;
     SpriteRenderer sp;
     UIManager scoringSystem;
 
@@ -59,6 +61,9 @@ public class Enemy2 : MonoBehaviour
             {
                 scoringSystem.score += 500;
                 scoringSystem.scoreText.text = "Score: " + scoringSystem.score.ToString();
+                GameObject ex = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+                Destroy(ex, 1);
+                AudioManager.instance.PlaySFX(EnemyAudio, "EnemyDie");
                 Destroy(gameObject);
             }
             else

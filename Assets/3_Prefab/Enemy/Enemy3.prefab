@@ -173,6 +173,8 @@ MonoBehaviour:
   st: {fileID: 0}
   enemyLaser: {fileID: 2830858097376547334, guid: 41dc1b08cc451ea41a447ab32a427e6e, type: 3}
   EL: {fileID: 0}
+  ExplosionPrefab: {fileID: 2963761908094940145, guid: ceb636d69f730fe45a70efe4bdfe63d4, type: 3}
+  EnemyAudio: {fileID: 11400000, guid: 9308a8529ffd92247bc72dfdf3d16dc0, type: 2}
 --- !u!1 &8040550749345612645
 GameObject:
   m_ObjectHideFlags: 0

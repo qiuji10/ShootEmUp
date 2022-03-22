@@ -149,3 +149,5 @@ MonoBehaviour:
   speed: 3
   frequency: 8
   magnitude: 1
+  ExplosionPrefab: {fileID: 2963761908094940145, guid: ceb636d69f730fe45a70efe4bdfe63d4, type: 3}
+  EnemyAudio: {fileID: 11400000, guid: 9308a8529ffd92247bc72dfdf3d16dc0, type: 2}

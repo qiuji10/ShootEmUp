@@ -287,3 +287,5 @@ MonoBehaviour:
   childTransform: {fileID: 0}
   st: {fileID: 0}
   enemyBullet: {fileID: 6573974146988140183, guid: 4c7181761af0a4d49a9a68fb41c433d7, type: 3}
+  ExplosionPrefab: {fileID: 2963761908094940145, guid: ceb636d69f730fe45a70efe4bdfe63d4, type: 3}
+  EnemyAudio: {fileID: 11400000, guid: 9308a8529ffd92247bc72dfdf3d16dc0, type: 2}
