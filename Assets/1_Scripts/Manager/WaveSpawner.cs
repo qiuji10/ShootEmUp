@@ -22,12 +22,11 @@ public class WaveSpawner : MonoBehaviour
     public class Wave
     {
         public string name;
-        //public Transform enemy;
         public Enemies enemies;
-        //public int count;
         public float rate;
     }
 
+    [Header("Wave Settings")]
     [SerializeField]
     private float waveCounddown;
     [SerializeField]
@@ -39,16 +38,16 @@ public class WaveSpawner : MonoBehaviour
     private int h2 = 5, h3 = 9;
     private float fr2 = 2f, fr3 = 4f, bs2 = 5f, s1 = 3f;
 
-    public Enemy1 E1;
-    public Enemy2 E2;
-    public Enemy3 E3;
-    public GameObject GunPowerups;
-    public GameObject[] buffPowerups;
+    [Header("UIText")]
     public Text wavesText;
     public Animator waveAnimator;
+
+    [Header("GameObjects Initialization")]
+    public GameObject[] buffPowerups;
     public Wave[] waves;
     public Transform[] spawnPoint;
 
+    [Header("Game State")]
     public SpawnState state = SpawnState.COUNTING;
 
     private void Start()
@@ -108,14 +107,6 @@ public class WaveSpawner : MonoBehaviour
         bs2 += 0.5f;
         fr2 -= 0.05f;
         fr3 -= 0.01f;
-
-        //looping wave, can modify what you want
-        //if (nextWave + 1 > waves.Length - 1)
-        //{
-        //    nextWave = 0;
-        //}
-        //else
-        //    nextWave++;
     }
 
     bool EnemyIsAlive()
@@ -133,11 +124,6 @@ public class WaveSpawner : MonoBehaviour
     IEnumerator SpwanWave(Wave _wave)
     {
         state = SpawnState.SPAWNING;
-        //for (int i = 0; i < _wave.count; i++)
-        //{
-        //    SpawnEnemy(_wave.enemy);
-        //    yield return new WaitForSeconds(1f / _wave.rate);
-        //}
         int one = _wave.enemies.count1, two = _wave.enemies.count2, three = _wave.enemies.count3;
         int allcount = one + two + three;
         for (int i = 0; i < allcount; i++)

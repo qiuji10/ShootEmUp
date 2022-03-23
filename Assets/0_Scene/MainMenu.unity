@@ -937,6 +937,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 876508315}
     m_Modifications:
+    - target: {fileID: 400794775460423606, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400794775460423607, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400794775460423607, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400794775743536850, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
       propertyPath: m_Name
       value: Crossfade
@@ -1028,6 +1040,14 @@ PrefabInstance:
     - target: {fileID: 400794776942725948, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400794776942725949, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400794776942725949, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b558582e72bfc4498b33617e63d24e8, type: 3}
